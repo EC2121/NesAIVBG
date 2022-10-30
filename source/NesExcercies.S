@@ -120,10 +120,6 @@ start:
         LDA LAST_INDEX_CURR_ROW
         ADC #$10
         STA LAST_INDEX_CURR_ROW
-        
-        JMP SPACING
-        END_DRAW_LOOP:
-            RTS
         SPACING:
             LDA #0
             STA PPUDATA
@@ -132,6 +128,8 @@ start:
             CMP #$10
             BEQ DRAWLOOP
             JMP SPACING
+        END_DRAW_LOOP:
+            RTS
 
 loop:
     JMP loop
@@ -171,16 +169,16 @@ nmi:
     STA OAMDATA
     
 
-    NMI_CHECK_DIRECTION
-    LDA buttons
-    CMP #%00000001
-    BEQ SCROLL_RIGHT
-    CMP #%00000010
-    BEQ SCROLL_LEFT
-    CMP #%00000100
-    BEQ SCROLL_UP
-    CMP #%00001000
-    BEQ SCROLL_DOWN
+    NMI_CHECK_DIRECTION:
+        LDA buttons
+        CMP #%00000001
+        BEQ SCROLL_RIGHT
+        CMP #%00000010
+        BEQ SCROLL_LEFT
+        CMP #%00000100
+        BEQ SCROLL_UP
+        CMP #%00001000
+        BEQ SCROLL_DOWN
     NMI_END:
     RTI
     
